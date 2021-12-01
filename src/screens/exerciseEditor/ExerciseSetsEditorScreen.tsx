@@ -23,17 +23,17 @@ export default function ExerciseSetsEditorScreen({
   const {
     params: { mode, exercise, training },
   } = route;
-  const [sets, setSets] = useState(exercise?.sets || 0);
+  const [series, setSeries] = useState(exercise?.series || 0);
   const modeCapitalized = useCapitalize(mode);
 
   function onChange(value: number) {
-    setSets(value);
-    exercise.sets = value;
+    setSeries(value);
+    exercise.series = value;
   }
 
   async function onSubmit() {
     try {
-      await context.saveExercise({ ...exercise, sets });
+      await context.saveExercise({ ...exercise, series });
       navigation.navigate(`${modeCapitalized}ExerciseRest`, {
         exercise,
         training,
@@ -47,7 +47,7 @@ export default function ExerciseSetsEditorScreen({
     <View style={styles.container}>
       <InputNumber
         label={"How many sets for your exercise ?"}
-        value={sets || 0}
+        value={series || 0}
         onChange={onChange}
         style={{ width: "100%", marginTop: "auto" }}
       />
@@ -55,7 +55,7 @@ export default function ExerciseSetsEditorScreen({
         style={{
           borderRadius: 10,
           backgroundColor: "yellow",
-          opacity: sets === 0 ? 0.5 : 1,
+          opacity: series === 0 ? 0.5 : 1,
           padding: 10,
           marginTop: "auto",
           alignSelf: "flex-end",
@@ -64,7 +64,7 @@ export default function ExerciseSetsEditorScreen({
         }}
       >
         <Button
-          disabled={sets === 0}
+          disabled={series === 0}
           color="black"
           title={"Apply sets"}
           onPress={() => onSubmit()}

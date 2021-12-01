@@ -88,7 +88,7 @@ export default function HomeScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/background.jpeg")}
+        source={require("../../assets/background.jpeg")}
         style={styles.image}
       ></ImageBackground>
       <View>

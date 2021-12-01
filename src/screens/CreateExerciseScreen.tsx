@@ -22,9 +22,8 @@ import { CreateExerciseStackParamList } from "../types";
 //   };
 // };
 
-const CreateExerciseStack = createStackNavigator<
-  CreateExerciseStackParamList
->();
+const CreateExerciseStack =
+  createStackNavigator<CreateExerciseStackParamList>();
 
 type CreateExerciseScreenProps = { route: { params: { training: ITraining } } };
 
@@ -41,7 +40,7 @@ export default function CreateExerciseScreen({
         initialParams={{
           mode: "create",
           training,
-          exercise: { name: "", rest: 0, sets: 0 },
+          exercise: { name: "", rest: 0, series: 0 },
         }}
       />
       <CreateExerciseStack.Screen

@@ -3,14 +3,14 @@ import { StatusBar } from "expo-status-bar";
 import { useKeepAwake } from "expo-keep-awake";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import CreateTrainingScreen from "./screens/CreateTrainingScreen";
-import TrainScreen from "./screens/TrainScreen";
-import CreateExerciseScreen from "./screens/CreateExerciseScreen";
-import EditExerciseScreen from "./screens/EditExerciseScreen";
-import EditTrainingScreen from "./screens/EditTrainingScreen";
-import HomeScreen from "./screens/HomeScreen";
-import { TrainingContextProvider } from "./context/trainingContext";
-import useDatabase from "./hooks/useDatabase";
+import CreateTrainingScreen from "./src/screens/CreateTrainingScreen";
+import TrainScreen from "./src/screens/TrainScreen";
+import CreateExerciseScreen from "./src/screens/CreateExerciseScreen";
+import EditExerciseScreen from "./src/screens/EditExerciseScreen";
+import EditTrainingScreen from "./src/screens/EditTrainingScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import { TrainingContextProvider } from "./src/context/trainingContext";
+import useDatabase from "./src/hooks/useDatabase";
 
 const Stack = createStackNavigator();
 

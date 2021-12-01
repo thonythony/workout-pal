@@ -15,7 +15,7 @@ const getTrainings = (): Promise<ITraining[]> => {
                  exercises.id as Training__exercises_id,
                  exercises.name as Training__exercises_name,
                  exercises.rest as Training__exercises_rest,
-                 exercises.sets as Training__exercises_sets
+                 exercises.series as Training__exercises_series
           FROM trainings
           LEFT JOIN exercises ON exercises.trainingId = trainings.id;
         `
@@ -30,7 +30,7 @@ const getTrainings = (): Promise<ITraining[]> => {
             id: item["Training__exercises_id"],
             name: item["Training__exercises_name"],
             rest: item["Training__exercises_rest"],
-            sets: item["Training__exercises_sets"],
+            series: item["Training__exercises_series"],
             trainingId: item["Training_id"],
           };
 
@@ -71,7 +71,7 @@ const getTraining = (id: number): Promise<ITraining> => {
                 exercises.id as Training__exercises_id,
                 exercises.name as Training__exercises_name,
                 exercises.rest as Training__exercises_rest,
-                exercises.sets as Training__exercises_sets
+                exercises.series as Training__exercises_series
         FROM trainings
         LEFT JOIN exercises ON exercises.trainingId = trainings.id
         WHERE trainings.id = ?;
@@ -84,7 +84,7 @@ const getTraining = (id: number): Promise<ITraining> => {
             id: item["Training__exercises_id"],
             name: item["Training__exercises_name"],
             rest: item["Training__exercises_rest"],
-            sets: item["Training__exercises_sets"],
+            series: item["Training__exercises_series"],
             trainingId: item["Training_id"],
           };
 
@@ -168,7 +168,7 @@ const createExercise = async (exercise: IExercise): Promise<IExercise> => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await executeSql(
-        "INSERT INTO exercises (name, rest, sets, trainingId) VALUES (?, ?, ?, ?)",
+        "INSERT INTO exercises (name, rest, series, trainingId) VALUES (?, ?, ?, ?)",
         Object.values(exercise)
       );
 
@@ -255,27 +255,29 @@ const setupDatabase = (): Promise<void> => {
                   id INTEGER PRIMARY KEY NOT NULL, 
                   name TEXT NOT NULL, 
                   rest INTEGER NOT NULL, 
-                  sets INTEGER NOT NULL, 
+                  series INTEGER NOT NULL, 
                   trainingId INTEGER
                );`
       );
+
       await executeSql(
         `CREATE TABLE temp_training_exercise (
                   id INTEGER PRIMARY KEY NOT NULL, 
                   name TEXT NOT NULL, 
                   rest INTEGER NOT NULL, 
-                  sets INTEGER NOT NULL, 
+                  series INTEGER NOT NULL, 
                   trainingId INTEGER, 
                   CONSTRAINT "FK_42" FOREIGN KEY (trainingId) REFERENCES trainings (id) ON DELETE CASCADE ON UPDATE CASCADE
                );`
       );
       await executeSql(
-        `INSERT INTO temp_training_exercise (id, name, rest, sets, trainingId) SELECT id, name, rest, sets, trainingId FROM exercises;`
+        `INSERT INTO temp_training_exercise (id, name, rest, series, trainingId) SELECT id, name, rest, series, trainingId FROM exercises;`
       );
       await executeSql(`DROP TABLE exercises;`);
       await executeSql(
         `ALTER TABLE temp_training_exercise RENAME TO exercises;`
       );
+
       return resolve();
     } catch (error) {
       return reject(error);
